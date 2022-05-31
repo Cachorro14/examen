@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\AlumnoMaterium;
+use App\Models\Alumno;
+use App\Models\Materia;
 use Illuminate\Http\Request;
 
 /**
@@ -19,8 +21,9 @@ class AlumnoMateriumController extends Controller
     public function index()
     {
         $alumnoMateria = AlumnoMaterium::paginate();
-
-        return view('alumno-materium.index', compact('alumnoMateria'))
+        $alumnos = Alumno::pluck('nombre','id');
+        $materias = Materia::pluck('nombre','id');
+        return view('alumno-materium.index', compact('alumnoMateria','alumnos','materias'))
             ->with('i', (request()->input('page', 1) - 1) * $alumnoMateria->perPage());
     }
 
@@ -31,8 +34,11 @@ class AlumnoMateriumController extends Controller
      */
     public function create()
     {
+
         $alumnoMaterium = new AlumnoMaterium();
-        return view('alumno-materium.create', compact('alumnoMaterium'));
+        $alumnos = Alumno::pluck('nombre','id');
+        $materias = Materia::pluck('nombre','id');
+        return view('alumno-materium.create', compact('alumnoMaterium','alumnos','materias'));
     }
 
     /**
@@ -47,7 +53,7 @@ class AlumnoMateriumController extends Controller
 
         $alumnoMaterium = AlumnoMaterium::create($request->all());
 
-        return redirect()->route('alumno-materium.index')
+        return redirect()->route('alumno_materium.index')
             ->with('success', 'AlumnoMaterium created successfully.');
     }
 
@@ -60,8 +66,10 @@ class AlumnoMateriumController extends Controller
     public function show($id)
     {
         $alumnoMaterium = AlumnoMaterium::find($id);
+        $alumnos = Alumno::pluck('nombre','id');
+        $materias = Materia::pluck('nombre','id');
 
-        return view('alumno-materium.show', compact('alumnoMaterium'));
+        return view('alumno_materium.show', compact('alumnoMaterium','alumnos','materias'));
     }
 
     /**
@@ -73,8 +81,10 @@ class AlumnoMateriumController extends Controller
     public function edit($id)
     {
         $alumnoMaterium = AlumnoMaterium::find($id);
+        $alumnos = Alumno::pluck('nombre','id');
+        $materias = Materia::pluck('nombre','id');
 
-        return view('alumno-materium.edit', compact('alumnoMaterium'));
+        return view('alumno_materium.edit', compact('alumnoMaterium','alumnos','materias'));
     }
 
     /**
@@ -89,8 +99,10 @@ class AlumnoMateriumController extends Controller
         request()->validate(AlumnoMaterium::$rules);
 
         $alumnoMaterium->update($request->all());
+        $alumnos = Alumno::pluck('nombre','id');
+        $libros = Materia::pluck('nombre','id');
 
-        return redirect()->route('alumno-materium.index')
+        return redirect()->route('alumno_materium.index')
             ->with('success', 'AlumnoMaterium updated successfully');
     }
 
@@ -103,7 +115,7 @@ class AlumnoMateriumController extends Controller
     {
         $alumnoMaterium = AlumnoMaterium::find($id)->delete();
 
-        return redirect()->route('alumno-materium.index')
+        return redirect()->route('alumno_materium.index')
             ->with('success', 'AlumnoMaterium deleted successfully');
     }
 }

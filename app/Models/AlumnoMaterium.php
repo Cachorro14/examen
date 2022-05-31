@@ -31,6 +31,8 @@ class AlumnoMaterium extends Model
      *
      * @var array
      */
+    public $timestamps = false;
+    
     protected $fillable = ['alumno_id','materia_id'];
 
 
