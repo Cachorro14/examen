@@ -34,6 +34,7 @@ class Alumno extends Model
      *
      * @var array
      */
+    public $timestamps = false;
     protected $fillable = ['nombre','codigo','carrera','creditos_cursados','correo'];
 
 
