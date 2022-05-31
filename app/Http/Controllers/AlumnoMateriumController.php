@@ -69,7 +69,7 @@ class AlumnoMateriumController extends Controller
         $alumnos = Alumno::pluck('nombre','id');
         $materias = Materia::pluck('nombre','id');
 
-        return view('alumno_materium.show', compact('alumnoMaterium','alumnos','materias'));
+        return view('alumno-materium\show', compact('alumnoMaterium','alumnos','materias'));
     }
 
     /**
